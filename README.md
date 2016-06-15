@@ -4,6 +4,7 @@ Page for [react-taco-table](https://github.com/pbeshai/react-taco-table)
 
 ## Set up
 1. Install dependencies with `npm install`
+1. Link to the local react-taco-table folder `npm link <path>/react-taco-table`
 1. To get the development server with hot-reloading started, run `grunt`
 1. Open a browser to http://localhost:8080
 
