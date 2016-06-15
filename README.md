@@ -1,6 +1,6 @@
-# ColumnTable
+# react-taco-table-page
 
-A react component for creating tables configured by a set of columns.
+Page for [react-taco-table](https://github.com/pbeshai/react-taco-table)
 
 ## Set up
 1. Install dependencies with `npm install`
