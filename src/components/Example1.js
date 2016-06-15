@@ -39,7 +39,7 @@ const columns = [
   {
     id: 'value1',
     type: DataType.Number,
-    renderer: Formatters.decFormat,
+    renderer: Formatters.decFormat(1),
     firstSortDirection: SortDirection.Descending,
     summarize: Summarizers.minMaxSummarizer,
     tdStyle: (cellData, summary, column, rowData) => {
@@ -59,13 +59,13 @@ const columns = [
   {
     id: 'value2',
     type: DataType.Number,
-    renderer: Formatters.plusMinusFormat,
+    renderer: Formatters.plusMinusFormat(1),
     firstSortDirection: SortDirection.Ascending,
   },
   {
     id: 'value2-2',
     type: DataType.Number,
-    renderer: Formatters.plusMinusFormat,
+    renderer: Formatters.plusMinusFormat(2),
     value: (rowData) => rowData.value2,
     plugins: {
       heatmap: {
@@ -76,7 +76,7 @@ const columns = [
   {
     id: 'value2-3',
     type: DataType.Number,
-    renderer: Formatters.plusMinusFormat,
+    renderer: Formatters.plusMinusFormat(1),
     value: (rowData) => rowData.value2,
     plugins: {
       heatmap: {
