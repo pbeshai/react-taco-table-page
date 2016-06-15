@@ -8,13 +8,12 @@ body {
 
 .highlight-min-max {
   font-weight: bold;
-
-  &.highlight-max {
-    font-size: 1.1em;
-  }
-
-  &.highlight-min {
-    font-size: 0.9em;
-  }
 }
 
+.highlight-max {
+  font-size: 1.3em;
+}
+
+.highlight-min {
+  font-size: 0.8em;
+}

@@ -1,6 +1,8 @@
 import React from 'react';
-import { TacoTable, DataType, SortDirection, Formatters, Utils, Summarizers, TdClassNames } from 'react-taco-table';
+import { TacoTable, DataType, SortDirection, Formatters,
+  Utils, Summarizers, TdClassNames, Plugins } from 'react-taco-table';
 import cellLinesData from '../data/cell_lines.json';
+import * as d3 from 'd3-scale';
 
 // add some random values to the data
 cellLinesData.forEach(d => {
@@ -8,6 +10,7 @@ cellLinesData.forEach(d => {
   d.value2 = Math.random() * 5 - 3;
   d.value3 = Math.ceil(Math.random() * 10);
 });
+
 
 const columns = [
   {
@@ -41,6 +44,7 @@ const columns = [
     summarize: Summarizers.minMaxSummarizer,
     tdStyle: (cellData, summary, column, rowData) => {
       const sortValue = Utils.getSortValueFromCellData(cellData, column, rowData);
+
       if (sortValue === summary.min) {
         return { color: 'red' };
       } else if (sortValue === summary.max) {
@@ -50,6 +54,7 @@ const columns = [
       return undefined;
     },
     tdClassName: TdClassNames.minMaxClassName,
+    plugins: { heatmap: false },
   },
   {
     id: 'value2',
@@ -58,21 +63,91 @@ const columns = [
     firstSortDirection: SortDirection.Ascending,
   },
   {
+    id: 'value2-2',
+    type: DataType.Number,
+    renderer: Formatters.plusMinusFormat,
+    value: (rowData) => rowData.value2,
+    plugins: {
+      heatmap: {
+        colorScheme: Plugins.HeatmapPlugin.ColorSchemes.Magma,
+      },
+    },
+  },
+  {
+    id: 'value2-3',
+    type: DataType.Number,
+    renderer: Formatters.plusMinusFormat,
+    value: (rowData) => rowData.value2,
+    plugins: {
+      heatmap: {
+        colorScheme: Plugins.HeatmapPlugin.ColorSchemes.Rainbow,
+        colorScale: () => 'black',
+      },
+    },
+  },
+  {
     id: 'value3',
     type: DataType.NumberOrdinal,
+    plugins: {
+      heatmap: {
+        domain: [3, 6],
+        backgroundScale: d3.scaleLinear().range(['#000', '#fff']).clamp(true),
+        colorScale: () => 'red',
+      },
+    },
   },
+  {
+    id: 'value3-2',
+    type: DataType.NumberOrdinal,
+    value: (rowData) => rowData.value3,
+    plugins: {
+      heatmap: {
+        domain: [3, 6],
+        backgroundScale: d3.scaleLinear().range(['#000', '#fff']).clamp(true),
+      },
+    },
+  },
+  {
+    id: 'value3-3',
+    type: DataType.NumberOrdinal,
+    value: (rowData) => rowData.value3,
+    plugins: {
+      heatmap: {
+        domain: [3, 6],
+        backgroundScale: d3.scaleLinear().range(['#000', '#fff']).clamp(true),
+        colorShift: 0.5,
+      },
+    },
+  },
+  {
+    id: 'value3-4',
+    type: DataType.NumberOrdinal,
+    value: (rowData) => rowData.value3,
+    plugins: {
+      heatmap: {
+        domain: [3, 6],
+        colorScheme: Plugins.HeatmapPlugin.ColorSchemes.Magma,
+      },
+    },
+  },
+
   {
     id: 'Nothing',
     value: () => null,
     type: DataType.None,
   },
 ];
-
+console.log(Plugins);
 function rowClassName(rowData, rowNumber) {
   if (rowNumber % 5 === 0) {
     return 'five-row';
   }
+
+  return undefined;
 }
+
+const plugins = [Plugins.HeatmapPlugin];
+
 
 class Example1 extends React.Component {
   render() {
@@ -83,6 +158,7 @@ class Example1 extends React.Component {
           data={cellLinesData}
           initialSortColumn={'name'}
           initialSortDirection={SortDirection.Descending}
+          plugins={plugins}
           rowClassName={rowClassName}
           striped
           sortable
