@@ -56,4 +56,41 @@
     text-align: right;
   }
 
+  .group-header {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+  }
+  .group-first {
+    border-left: 1px solid #ccc;
+  }
+
+  .group-last {
+    border-right: 1px solid #ccc;
+  }
+
+  .sorted {
+    background-color: #06c;
+    color: #fff;
+    position: relative;
+  }
+
+  .sort-indicator {
+    &.sort-ascending:after {
+      content: '▲';
+    }
+
+    &.sort-descending:after {
+      content: '▼';
+    }
+
+    &:after {
+      position: absolute;
+      right: 0;
+      top: 0;
+      background: rgba(0, 0, 0, 0.3);
+      font-size: 8px;
+      padding: 2px;
+
+    }
+  }
 }

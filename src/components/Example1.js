@@ -126,7 +126,8 @@ const columns = [
     plugins: {
       heatmap: {
         domain: [3, 6],
-        colorScheme: Plugins.HeatmapPlugin.ColorSchemes.Magma,
+        colorScheme: Plugins.HeatmapPlugin.ColorSchemes.CubehelixDefault,
+        highlight: 'always',
       },
     },
   },
@@ -137,7 +138,7 @@ const columns = [
     type: DataType.None,
   },
 ];
-console.log(Plugins);
+
 function rowClassName(rowData, rowNumber) {
   if (rowNumber % 5 === 0) {
     return 'five-row';
@@ -146,8 +147,12 @@ function rowClassName(rowData, rowNumber) {
   return undefined;
 }
 
-const plugins = [Plugins.HeatmapPlugin];
-
+const plugins = [Plugins.HighlightOnly(Plugins.HeatmapPlugin, { onColumnHighlight: true, onRowHighlight: true })];
+const columnGroups = [
+  { columns: ['name', 'receptorStatus'], header: 'Group 1' },
+  { columns: ['BRCA1'], header: 'Group 2', className: 'big-group' },
+  { columns: ['Nothing'] },
+];
 
 class Example1 extends React.Component {
   render() {
@@ -155,6 +160,7 @@ class Example1 extends React.Component {
       <div>
         <TacoTable
           columns={columns}
+          columnGroups={columnGroups}
           data={cellLinesData}
           initialSortColumn={'name'}
           initialSortDirection={SortDirection.Descending}
